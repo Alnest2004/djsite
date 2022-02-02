@@ -1,0 +1,23 @@
+{% extends 'women/base.html' %}
+<!-- {{ form.as_p }} - вместо стандартного вывода форма мы выведем её через
+ цикл. { for f in form } - перебираем все поля формы и в ручную формируем все эти поля
+ -->
+{% block content %}
+<h1>{{ title }}</h1>
+
+<form method="post">
+  {% csrf_token %}
+
+<!-- id_for_label- тот атрибут рендерит ID поля. Например, вы можете
+использовать его, если вы самостоятельно создаете <label> для поля -->
+  <!-- Атрибут for - Задает уникальный идентификатор, определяемый с
+   помощью атрибута id элемента <input>, с которым следует установить связь. -->
+
+{% for f in form %}
+<p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }} </p>
+<div class="form-error">{{ f.errors }}</div>
+{% endfor %}
+
+  <button type="submit">Регистрация</button>
+</form>
+{% endblock %}

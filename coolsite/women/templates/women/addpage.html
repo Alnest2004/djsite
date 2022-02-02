@@ -1,0 +1,39 @@
+{% extends 'women/base.html' %}
+<!-- form.as_p - позволяет отоброжать все поля формы, через тег абзаца p,
+получеатся это функция.
+for=" form.title.id_for_label " - тут мы прописываем для тега label
+  идентификатор уникальный(id) для этого поля title
+   form.title.label - позволяет отоброжать заголовок этого поля
+   form.title - подставит соотв. тег для ввода заголовка
+   .id_for_label - метод самого джанго.
+
+   Нам не обязательно позволять Django распаковывать поля формы; при желании мы
+   можем сделать это вручную (что позволит нам, например, изменить порядок полей).
+    Каждое поле доступно как атрибут формы с помощью {{ form.name_of_field }}
+
+    form.non_field_errors - Будем выводить коллекцию. Отображать ошибки не связанные
+    с полями
+
+   form.title.errors - выводит возможные ошибки которые могут возникнуть при вводе этого заголовка
+
+   enctype="multipart/form-data" - его обязательно нужно указывать при передаче каких-либо файлов,
+   совместно с данными
+
+   -->
+{% block content %}
+<h1>{{ title }}</h1>
+
+<form action="{% url 'add_page' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-error">{{ form.non_field_errors }}</div>
+
+    {% for f in form %}
+    <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+    <div class="form-error">{{ f.errors }}</div>
+    {% endfor %}
+
+    <button type="submit">Добавить</button>
+</form>
+
+{% endblock %}

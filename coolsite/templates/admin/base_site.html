@@ -1,0 +1,16 @@
+{% extends "admin/base.html" %}
+{% load static %}
+<!-- block extrastyle - подключаем нашу таблицу стилей. Таблицу стилей
+ которая будет добовлять новые стили к админ панели -->
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}
+
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

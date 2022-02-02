@@ -1,0 +1,12 @@
+{% for c in cats %} <!-- cats - это параметр из women_tags.py. Который
+ находится в функции show из return "cats"-->
+<!-- cat_selected - мы получаем из функции views(show_categories), эта функкия
+ срабатывает потому что в urls прописано какую функцию использовать если сылка
+ соответствует шаблону. c.pk - перечисляется по порядку(1,2).
+ -->
+	{% if c.pk == cat_selected %}
+		<li class = "selected">{{c.name}}</li>
+	{% else %}
+		<li><a href="{{ c.get_absolute_url }}">{{c.name}}</a></li>
+	{% endif %}
+{% endfor %}

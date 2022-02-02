@@ -1,0 +1,32 @@
+{% extends 'women/base.html' %}
+{% block content %}
+<!-- Использование фильтров шаблона linebreaks|truncatewords:50-->
+<ul class="list-articles">
+	{% for p in posts %}
+			<li><div class="article-panel">
+				<p class="first">Категория: {{p.cat}}</p>
+				<p class="last">Дата: {{p.time_update|date:"d-m-Y H:i:s"}}</p>
+
+			</div>
+				{% if p.photo %}
+				<p><img class="img-article-left thumb" src="{{p.photo.url}}"></p>
+				{% endif %}
+				<h2>{{p.title}}</h2>
+	{% autoescape on %}
+	{{p.content|linebreaks|truncatewords:50}}
+	{% endautoescape %}
+			<div class="clear"></div>
+			<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
+			</li>
+	{% endfor %}
+</ul>
+{% endblock %}
+
+<!-- Определяется какой именно элемент взять из-за for(так как он
+по очереди перебирает все элементы) -->
+
+<!-- p.pk - (pk) -это идентификатор записи. (p) - это экземпляр класса Women   -->
+<!-- Тут p.pk мы используем этот атрибут, что бы передать этот индефикатор
+как параметр ссылки 'post'. То есть этот тег url возьмёт адрес по имени
+'post' и вместо post_id подставит идентификатор записи и будет сформирована
+соответствующая ссылка-->
